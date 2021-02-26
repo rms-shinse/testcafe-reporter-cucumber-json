@@ -20,8 +20,12 @@ exports['default'] = () => {
         report,
       );
     },
-    reportTestDone(name: string, testRunInfo: TestRunInfo) {
-      extendedReporterPlugin.reportTestDone.call(this, name, testRunInfo, report);
+    reportTestDone(
+      name: string,
+      testRunInfo: TestRunInfo,
+      meta: Record<string, unknown>,
+    ) {
+      extendedReporterPlugin.reportTestDone.call(this, name, testRunInfo, report, meta);
     },
     renderErrors(errs: CallsiteError[]) {
       return extendedReporterPlugin.renderErrors.call(this, errs);

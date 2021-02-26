@@ -98,7 +98,11 @@ export interface CustomReportData {
 }
 export interface CucumberJsonReportInterface {
   createFeature: (name: string, path: string) => CucumberJsonReportInterface;
-  createScenario: (name: string, testRunInfo: TestRunInfo) => CucumberJsonReportInterface;
+  createScenario: (
+    name: string,
+    testRunInfo: TestRunInfo,
+    meta: Record<string, unknown>,
+  ) => CucumberJsonReportInterface;
   currentFeature: MultiBrowserFeatureReport | undefined;
   currentScenario: MultiBrowserScenario | undefined;
   finalizeWith: (

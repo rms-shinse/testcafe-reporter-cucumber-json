@@ -26,6 +26,7 @@ export interface ExtendedReporter {
     name: string,
     testRunInfo: TestRunInfo,
     report: CucumberJsonReportInterface,
+    meta: Record<string, unknown>,
   ) => void;
   reportTaskDone: (
     endTime: Date,

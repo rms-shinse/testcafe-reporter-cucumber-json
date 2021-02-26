@@ -181,11 +181,12 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
   public createScenario = (
     name: string,
     testRunInfo: TestRunInfo,
+    meta: Record<string, unknown>,
   ): CucumberJsonReportInterface => {
     const newScenario: MultiBrowserScenario = {};
     this._userAgents.forEach((userAgent) => {
       const scenarioId = this.getScenarioIdFrom(name);
-      const step = this.createDefaultStep(name, testRunInfo, userAgent);
+      const step = this.createDefaultStep(name, testRunInfo, userAgent, meta);
       const scenarioTags = tagsFromDescription(name).map((tag) => tag.name);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const featureTags = this.currentFeature![userAgent].tags.map((tag) => tag.name);
@@ -339,6 +340,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
     name: string,
     testRunInfo: TestRunInfo,
     browserName: string,
+    meta: Record<string, unknown>,
   ): Step => {
     let stepStatus: StepStatus = testRunInfo.skipped ? 'skipped' : 'passed';
     const errs = this.getTestRunErrorsForBrowser(testRunInfo, browserName);
@@ -357,7 +359,7 @@ export class CucumberJsonReport implements CucumberJsonReportInterface {
         error_message: undefined,
         status: stepStatus,
       },
-      text: [`<a href="#">${sourceLine || ''}</a>`],
+      text: [`<a href="#">${sourceLine || ''}</a>`, JSON.stringify(meta.text)],
     };
     if (this.currentFeature) {
       step.match = {

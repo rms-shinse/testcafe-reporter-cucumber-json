@@ -28,8 +28,9 @@ export const extendedReporterPlugin: ExtendedReporterPlugin = {
     name: string,
     testRunInfo: TestRunInfo,
     report: CucumberJsonReportInterface,
+    meta: Record<string, unknown>,
   ) {
-    report.createScenario(name, testRunInfo);
+    report.createScenario(name, testRunInfo, meta);
 
     const browsers = new Set(
       testRunInfo.browsers.map((browser) => browser.prettyUserAgent),
